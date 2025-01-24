@@ -33,7 +33,6 @@ spec:
       tags: mlflow-system,1.0.0
       title: MLFlow Model Runs
       status: ${ .getCompositionDefinition.status.conditions[] | select(.type == "Ready") | "Ready:" + .status }
-      date: ${ .getCompositionDefinition.metadata.creationTimestamp }
   propsRef:
     name: template-ml-test-card
     namespace: mlflow-system
@@ -70,7 +69,7 @@ spec:
         id: submit
         apiVersion: composition.krateo.io/v1-0-0
         verb: POST
-        resource: mlflowruns
+        resource: mltests
         payloadToOverride:
         - name: metadata.name
           value: ${ mlflow.run.name }
@@ -85,7 +84,7 @@ spec:
       # - repo
   api:
   - name: getCRD
-    path: "/apis/apiextensions.k8s.io/v1/customresourcedefinitions/mlflowruns.composition.krateo.io"
+    path: "/apis/apiextensions.k8s.io/v1/customresourcedefinitions/mltests.composition.krateo.io"
     verb: GET
     headers:
     - 'Accept: application/json'
